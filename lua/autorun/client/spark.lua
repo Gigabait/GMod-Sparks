@@ -54,6 +54,7 @@ concommand.Add( "SparkTest", function()
 
 	local Frame = vgui.Create( "DFrame" )
 	Frame:SetSize( ScrW() - 100, ScrH() - 100 )
+	Frame:SetTitle( "Sparks" )
 	Frame:Center()
 	Frame:MakePopup()
 
