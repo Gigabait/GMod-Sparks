@@ -26,20 +26,19 @@ local function DrawSparks()
 
 	for k, sp in ipairs( sparks ) do
 
-		local rnd = math.random() * colorshakiness
-
-		render.SetMaterial( mat )
-		render.DrawSprite( sp.pos, sp.size, sp.size, Color( sp.col.r + rnd, sp.col.g + rnd, sp.col.b + rnd ) )
-
-		sp.pos = sp.pos + sp.vel
 		sp.vel = sp.vel + Vector( randomFloat( -posshakiness, posshakiness ), randomFloat( -posshakiness, posshakiness ), randomFloat( -posshakiness, posshakiness ) )
 		sp.col.g = sp.col.g - math.random() * colordecay
+		sp.pos = sp.pos + sp.vel
 
 		sp.size = sp.size / sizedecay
 		if sp.size < removesize then
 			table.remove( sparks, k )
 		end
 
+		local rnd = math.random() * colorshakiness
+		render.SetMaterial( mat )
+		render.DrawSprite( sp.pos, sp.size, sp.size, Color( sp.col.r + rnd, sp.col.g + rnd, sp.col.b + rnd ) )
+		
 	end
 
 end
