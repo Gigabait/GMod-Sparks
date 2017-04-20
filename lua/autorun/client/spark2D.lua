@@ -7,16 +7,12 @@ local sizedecay, colordecay = 1.02, 10
 local minsize, maxsize = 5, 50
 local bounceoffedges = true
 
-local function randomFloat( min, max )
-	return min + math.random()  * ( max - min )
-end
-
 local function CreateSparks( pos )
 	for i = 0, math.random( minparticles, maxparticles ) do
 		table.insert( sparks, {
 			pos = pos,
-			vel = Vector( randomFloat( -speed, speed ), randomFloat( -speed, speed ) ),
-			size = randomFloat( minsize, maxsize ),
+			vel = Vector( math.Rand( -speed, speed ), math.Rand( -speed, speed ) ),
+			size = math.Rand( minsize, maxsize ),
 			col = Color( 255, 255, 0 )
 		} )
 	end
@@ -26,7 +22,7 @@ local function DrawSparks( w, h )
 
 	for k, sp in ipairs( sparks ) do
 
-		sp.vel = sp.vel + Vector( randomFloat( -posshakiness, posshakiness ), randomFloat( -posshakiness, posshakiness ) )
+		sp.vel = sp.vel + Vector( math.Rand( -posshakiness, posshakiness ), math.Rand( -posshakiness, posshakiness ) )
 		sp.col.g = sp.col.g - math.random() * colordecay
 		sp.pos = sp.pos + sp.vel
 
