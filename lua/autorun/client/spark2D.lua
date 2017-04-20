@@ -7,8 +7,8 @@ local sizedecay, colordecay = 1.02, 10
 local minsize, maxsize = 5, 50
 local bounceoffedges = true
 
-local function randomFloat(min, max)
-	return min + math.random()  * (max - min)
+local function randomFloat( min, max )
+	return min + math.random()  * ( max - min )
 end
 
 local function CreateSparks( x, y )
