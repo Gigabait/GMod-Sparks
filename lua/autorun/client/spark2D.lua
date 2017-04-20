@@ -7,14 +7,18 @@ local sizedecay, colordecay = 1.02, 10
 local minsize, maxsize = 5, 50
 local bounceoffedges = true
 
+local function randomFloat(min, max)
+	return min + math.random()  * (max - min)
+end
+
 local function CreateSparks( x, y )
 	for i = 0, math.random( minparticles, maxparticles ) do
 		table.insert( sparks, {
 			x = x, y = y,
-			xv = math.random( -speed, speed ),
-			yv = math.random( -speed, speed ),
-			s = math.random( minsize, maxsize ),
-			c = Color( 255, 255, 0 )
+			xvel = randomFloat( -speed, speed ),
+			yvel = randomFloat( -speed, speed ),
+			size = randomFloat( minsize, maxsize ),
+			col = Color( 255, 255, 0 )
 		} )
 	end
 end
@@ -25,24 +29,24 @@ local function DrawSparks( w, h )
 
 		local rnd = math.random() * colorshakiness
 
-		surface.SetDrawColor( sp.c.r + rnd, sp.c.g + rnd, sp.c.b + rnd )
-		surface.DrawRect( sp.x - sp.s / 2, sp.y - sp.s / 2, sp.s, sp.s )
+		surface.SetDrawColor( sp.col.r + rnd, sp.col.g + rnd, sp.col.b + rnd )
+		surface.DrawRect( sp.x - sp.size / 2, sp.y - sp.size / 2, sp.size, sp.size )
 
-		sp.x = sp.x + sp.xv
-		sp.y = sp.y + sp.yv
+		sp.x = sp.x + sp.xvel
+		sp.y = sp.y + sp.yvel
 
 		if bounceoffedges then
-			if sp.x <= 0 or sp.x >= w then sp.xv = -sp.xv end
-			if sp.y <= 0 or sp.y >= h then sp.yv = -sp.yv end
+			if sp.x <= 0 or sp.x >= w then sp.xvel = -sp.xvel end
+			if sp.y <= 0 or sp.y >= h then sp.yvel = -sp.yvel end
 		end
 
-		sp.xv = sp.xv + math.random( -posshakiness, posshakiness )
-		sp.yv = sp.yv + math.random( -posshakiness, posshakiness )
+		sp.xvel = sp.xvel + randomFloat( -posshakiness, posshakiness )
+		sp.yvel = sp.yvel + randomFloat( -posshakiness, posshakiness )
 
-		sp.c.g = sp.c.g - math.random() * colordecay
+		sp.col.g = sp.col.g - math.random() * colordecay
 
-		sp.s = sp.s / sizedecay
-		if sp.s < removesize then
+		sp.size = sp.size / sizedecay
+		if sp.size < removesize then
 			table.remove( sparks, k )
 		end
 
